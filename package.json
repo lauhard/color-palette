@@ -50,6 +50,7 @@
 		"wrangler": "^4.63.0"
 	},
 	"dependencies": {
+		"@lucide/svelte": "^0.577.0",
 		"better-sqlite3": "^12.6.2",
 		"color": "^5.0.3"
 	}
