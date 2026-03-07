@@ -1,12 +1,23 @@
 <script lang="ts">
+    import {
+        LucideCopy,
+        LucideCross,
+        LucideTrash,
+        LucideTrash2,
+        LucideXCircle,
+    } from "@lucide/svelte";
     export type ColorBoxEntity = {
         id: string;
         name?: string;
         color: string;
     };
     import Color, { type ColorInstance } from "color";
-    let { colorBox = $bindable() }: { colorBox: ColorBoxEntity } = $props();
+    let { colorBox = $bindable(), delete:fn }: { colorBox: ColorBoxEntity, delete:(id:string)=>void } = $props();
     let col = $derived<ColorInstance>(Color(colorBox.color));
+        
+    const colorBoxDelete = (e:MouseEvent)=>{
+        fn(colorBox.id);
+    }
 </script>
 
 <div
@@ -14,6 +25,12 @@
     data-color={colorBox.color}
     style="--color:{colorBox.color}"
 >
+    <button class="btn btn-delete" onclick={colorBoxDelete}>
+        <LucideXCircle size="2rem"></LucideXCircle>
+    </button>
+    <button class="btn btn-copy">
+        <LucideCopy></LucideCopy>
+    </button>
     <input
         type="color"
         bind:value={colorBox.color}
@@ -30,6 +47,49 @@
 
 <style>
     .color-box {
+        position: relative;
+        .btn {
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            transition-property: display, opacity;
+            transition-timing-function: ease-in-out;
+            transition-duration: 400ms;
+            transition-behavior: allow-discrete;
+        }
+        .btn-delete {
+            top: -10px;
+            right: -5px;
+            z-index: 100;
+            opacity: 0;
+        }
+        .btn-copy {
+            top: -10px;
+            left: -5px;
+            z-index: 100;
+            opacity: 0;
+        }
+
+        @starting-style {
+            .btn-delete,
+            .btn-copy {
+                display: none;
+                opacity: 0;
+            }
+        }
+
+        &:hover {
+            .btn-delete,
+            .btn-copy {
+                display: flex;
+                opacity: 1;
+            }
+        }
+
         width: inherit;
         height: auto;
         max-width: 120px;
@@ -50,29 +110,29 @@
             );
         background-origin: padding-box, border-box;
         background-clip: padding-box, border-box;
-        border: var(--color) 2px solid;
+        border: transparent 2px solid;
+
         corner-shape: squircle;
         border-radius: 90px;
-        overflow: clip;
-        &:hover {
-            box-shadow: 2.5px 1px 4px 0.5px rgb(41, 40, 40);
-            transform: scale(1.02);
-            border: transparent 2px solid;
-        }
         transition-property: box-shadow, transform, border;
         transition-duration: 200ms;
         transition-timing-function: ease-in-out;
 
         input[type="color"] {
-            height: 100%;
+            box-sizing: border-box;
+            max-width: 120px;
+            max-height: 120px;
             width: 100%;
+            height: 100%;
             display: block;
             margin: 0;
             padding: 0;
-            border: none;
+            border: unset;
             outline: none;
             inset: none;
-            border-style: none;
+            border-style: unset;
+            corner-shape: squircle;
+            border-radius: 90px;
         }
         input[type="color"]::-moz-color-swatch {
             border: none;
