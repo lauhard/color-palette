@@ -1,10 +1,23 @@
-import { drizzle } from 'drizzle-orm/better-sqlite3';
-import Database from 'better-sqlite3';
-import * as schema from './schema';
-import { env } from '$env/dynamic/private';
+import type { Platform } from '../../../app';
+import { local_db } from './local';
+import { d1 } from '$lib/server/db/d1';
+import type { DBType } from '../../../types';
 
-if (!env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
+const isLocalEnvironment = () => {
+    //undefined can happens running migrations locally
+    if( typeof (import.meta.env.MODE) === 'undefined' || import.meta.env.MODE === 'development'){
+        return true;
+    }
+    return false;
+}
 
-const client = new Database(env.DATABASE_URL);
+export const db = (platform: Platform): DBType => {
+    if (isLocalEnvironment()) {
+        return local_db();
+    }
+    else {
+        return d1(platform);
+    }
+}
 
-export const db = drizzle(client, { schema });
+

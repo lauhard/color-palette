@@ -4,10 +4,14 @@ import type { User, Session } from 'better-auth/minimal';
 // for information about these interfaces
 declare global {
 	namespace App {
+		
 		interface Platform {
 			env: Env;
 			ctx: ExecutionContext;
-			caches: CacheStorage;
+			context: {
+				waitUntil(promise: Promise<any>): void;
+			};
+			caches: { default: Cache } & CacheStorage
 			cf?: IncomingRequestCfProperties
 		}
 
@@ -19,4 +23,4 @@ declare global {
 	}
 }
 
-export {};
+export { Locals, Platform, User } from './app';

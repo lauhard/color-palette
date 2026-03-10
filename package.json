@@ -15,10 +15,18 @@
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
 		"lint": "eslint .",
-		"db:push": "drizzle-kit push",
-		"db:generate": "drizzle-kit generate",
-		"db:migrate": "drizzle-kit migrate",
+		"db:generate": "drizzle-kit generate --config=drizzle.local.config.ts",
+		"db:cf-generate": "drizzle-kit generate --config=drizzle.d1.config.ts",
+		"db:migrate": "drizzle-kit migrate --config=drizzle.local.config.ts",
+		"db:cf-migrate": "drizzle-kit migrate --config=drizzle.d1.config.ts",
+		"db:push": "drizzle-kit push --config=drizzle.local.config.ts",
+		"db:cf-push": "drizzle-kit push --config=drizzle.d1.config.ts",
 		"db:studio": "drizzle-kit studio",
+		"cf:deploy": "npm run build && npx wrangler deploy",
+		"cf:preview": "npm run build && npx wrangler dev",
+		"cf-typegen": "wrangler types ./src/worker-configuration.d.ts",
+		"ba:generate": "npx @better-auth/cli@latest generate --config ./src/lib/betterauth/auth.ts",
+		"ba:migrate": "npx @better-auth/cli@latest migrate --config ./src/lib/betterauth/auth.ts",
 		"auth:schema": "better-auth generate --config src/lib/server/auth.ts --output src/lib/server/db/auth.schema.ts --yes"
 	},
 	"devDependencies": {
@@ -47,9 +55,10 @@
 		"vite-plugin-devtools-json": "^1.0.0",
 		"vitest": "^4.0.18",
 		"vitest-browser-svelte": "^2.0.2",
-		"wrangler": "^4.63.0"
+		"wrangler": "^4.71.0"
 	},
 	"dependencies": {
+		"@better-auth/infra": "^0.1.8",
 		"@dnd-kit/svelte": "^0.3.2",
 		"@lucide/svelte": "^0.577.0",
 		"better-sqlite3": "^12.6.2",
