@@ -1,0 +1,1 @@
+ALTER TABLE `palette` DROP COLUMN `test`;

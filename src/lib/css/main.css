@@ -105,6 +105,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
         *,
         *::before,
         *::after {
@@ -296,7 +297,7 @@
         --shadow-none: none;
 
         /* adaptive shadow color tokens — higher opacity in dark mode for visibility on near-black backgrounds */
-        --shadow-clr-soft:   light-dark(oklch(0% 0 0 / 8%),  oklch(0% 0 0 / 55%));
+        --shadow-clr-soft: light-dark(oklch(0% 0 0 / 8%), oklch(0% 0 0 / 55%));
         --shadow-clr-medium: light-dark(oklch(0% 0 0 / 10%), oklch(0% 0 0 / 65%));
         --shadow-clr-strong: light-dark(oklch(0% 0 0 / 14%), oklch(0% 0 0 / 80%));
 
@@ -305,12 +306,12 @@
 
         /* default: cards */
         --shadow-md:
-            0 1px 2px  var(--shadow-clr-soft),
+            0 1px 2px var(--shadow-clr-soft),
             0 8px 18px var(--shadow-clr-medium);
 
         /* elevated: modals / popovers */
         --shadow-lg:
-            0 2px 6px  var(--shadow-clr-medium),
+            0 2px 6px var(--shadow-clr-medium),
             0 20px 40px var(--shadow-clr-strong);
 
         /* focus ring — uses accent token so it switches aquamarine ↔ orange in dark mode */
@@ -434,7 +435,8 @@
             color: var(--color-ld-accent-500);
         }
     }
-    span{
+
+    span {
         font-size: var(--span);
     }
 
@@ -479,7 +481,8 @@
             outline: none;
             box-shadow: var(--shadow-focus);
         }
-        &:disabled{
+
+        &:disabled {
             background-color: #dcdcdc2c;
             text-decoration: line-through;
             border-color: #dcdcdc97;
@@ -742,8 +745,10 @@
             margin-inline: var(--space-2);
         }
     }
+
+    
 }
 
 @layer components {}
 
-@layer blog{}
+@layer blog {}

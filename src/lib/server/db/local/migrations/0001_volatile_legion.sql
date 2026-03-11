@@ -1,0 +1,1 @@
+ALTER TABLE `palette` ADD `test` text NOT NULL;

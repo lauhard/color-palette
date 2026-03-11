@@ -13,12 +13,10 @@
     let {
         colorBox = $bindable(),
         ondelete: fn,
-        draggable,
         ...rest
     }: {
         colorBox: ColorBoxEntity;
         ondelete: (id: string) => void;
-        draggable: boolean;
     } = $props();
     let col = $derived<ColorInstance>(Color(colorBox.color));
     let isDeleteing = $state(false);
@@ -41,7 +39,6 @@
     class:deleting={isDeleteing === true}
     class=" color-box"
     style="--color:{colorBox.color}"
-    {draggable}
     {...rest}
 >
     <button class="btn btn-delete" onclick={colorBoxDelete}>
@@ -239,6 +236,7 @@
             color: #f5f0f0;
         }
     }
+   
     .deleting {
         border-radius: 100%;
 
