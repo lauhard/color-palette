@@ -1,0 +1,21 @@
+@layer base;
+
+@layer base {
+    .draggable {
+        min-width: fit-content;
+        min-height: fit-content;
+        background-color: transparent;
+        overflow: clip();
+        transform: translate(0, 0);
+    }
+
+    .dragging {
+        border: 2px dashed rgb(124, 215, 54);
+    }
+
+    .dropzone {
+        border: 2px dashed orangered;
+        min-width: fit-content;
+        min-height: fit-content;
+    }
+}

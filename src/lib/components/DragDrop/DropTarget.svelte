@@ -5,10 +5,12 @@
         children,
         id,
         ondrop: fn,
+        style
     }: {
         children: Snippet;
         id: string;
         ondrop: (event: DragEvent, targetId: string) => void;
+        style?:string;
     } = $props();
     const dropHandler = (event: DragEvent) => {
         showDropzone = false;
@@ -19,6 +21,7 @@
 
 <div
     class:dropzone={showDropzone}
+    style="{style}"
     data-droptarget={id}
     ondrop={dropHandler}
     ondragover={(event) => {
@@ -39,14 +42,3 @@
 >
     {@render children()}
 </div>
-
-<style>
-    .dropzone {
-        border: 2px dashed orangered;
-        min-width: fit-content;
-        min-height: fit-content;
-        corner-shape: squircle;
-        padding: 1px;
-        border-radius: 90px;
-    }
-</style>

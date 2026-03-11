@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1773165087104,
+      "tag": "0000_magical_marauders",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1773165315241,
+      "tag": "0001_volatile_legion",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1773165395095,
+      "tag": "0002_round_next_avengers",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1773165437048,
+      "tag": "0003_powerful_george_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1773172854570,
+      "tag": "0004_eminent_doctor_doom",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1773172909260,
+      "tag": "0005_bizarre_starfox",
+      "breakpoints": true
+    }
+  ]
+}

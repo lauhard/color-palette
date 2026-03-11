@@ -5,8 +5,21 @@
 
     let colorPaletteList = $state<ColorPaletteEntity[]>([]);
 
-    
+    /**
+     * 
+     * [{name:--color-001;color: #fffffff;id:asdfasdfsdfsdf},{name:--color-red-500;color: #fffffff;id:asdfasdfsdfsdf},{name:--color-red-500;color: #fffffff;id:asdfasdfsdfsdf},]
+     * 
+     * zausl
+     * --color-red-500:#fffffff;
+     * --color-red-400:#fffffff;
+     * --color-red-300:#fffffff;
+     * --color-red-200:#fffffff;
+     * 
+     * 
+    */
 </script>
+
+
 
 <section class="ccp">
     <h1>Your Cool Color Palettes</h1>

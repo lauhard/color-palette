@@ -16,12 +16,12 @@
 		"test:e2e": "playwright test",
 		"lint": "eslint .",
 		"db:generate": "drizzle-kit generate --config=drizzle.local.config.ts",
-		"db:cf-generate": "drizzle-kit generate --config=drizzle.d1.config.ts",
 		"db:migrate": "drizzle-kit migrate --config=drizzle.local.config.ts",
-		"db:cf-migrate": "drizzle-kit migrate --config=drizzle.d1.config.ts",
 		"db:push": "drizzle-kit push --config=drizzle.local.config.ts",
-		"db:cf-push": "drizzle-kit push --config=drizzle.d1.config.ts",
 		"db:studio": "drizzle-kit studio",
+		"db:cf-generate": "drizzle-kit generate --config=drizzle.d1.config.ts",
+		"db:cf-migrate": "drizzle-kit migrate --config=drizzle.d1.config.ts",
+		"db:cf-push": "drizzle-kit push --config=drizzle.d1.config.ts",
 		"cf:deploy": "npm run build && npx wrangler deploy",
 		"cf:preview": "npm run build && npx wrangler dev",
 		"cf-typegen": "wrangler types ./src/worker-configuration.d.ts",
@@ -62,6 +62,7 @@
 		"@dnd-kit/svelte": "^0.3.2",
 		"@lucide/svelte": "^0.577.0",
 		"better-sqlite3": "^12.6.2",
-		"color": "^5.0.3"
+		"color": "^5.0.3",
+		"zod": "^4.3.6"
 	}
 }

@@ -5,19 +5,18 @@
         color: string;
         boxes: ColorBoxEntity[];
     };
-    import Color, { type ColorInstance } from "color";
     import type { ColorBoxEntity } from "./ColorBox.svelte";
-    import { Boxes, LucideCirclePlus, LucidePen } from "@lucide/svelte";
+    import { LucideCirclePlus } from "@lucide/svelte";
     import ColorBox from "./ColorBox.svelte";
-    import DropTarget from "./DropTarget.svelte";
+    import DropTarget from "$lib/components/DragDrop/DropTarget.svelte";
+    import DragTarget from "$lib/components/DragDrop/DragTarget.svelte";
     let { colorPalette = $bindable() }: { colorPalette: ColorPaletteEntity } =
         $props();
-    let col = $derived<ColorInstance>(Color(colorPalette.color));
 
     const addColorBox = () => {
         const id = crypto.randomUUID();
         let colorBox: ColorBoxEntity = {
-            name: "some name",
+            name: "--color-001",
             id: id,
             color:
                 colorPalette.boxes.length > 0
@@ -39,33 +38,25 @@
         colorPalette.boxes = [...newBoxes];
     };
 
-    //attachment dargstart
-    const ondragstart = (Element: HTMLElement) => {
-        const dragStartHandler = (event: DragEvent) => {
-            event.dataTransfer?.setData(
-                "text/plain",
-                (event?.target as HTMLElement).id,
-            );
-        };
-        document.addEventListener("dragstart", dragStartHandler);
-        return () => {
-            document.removeEventListener("dragstart", dragStartHandler, true);
-        };
-    };
-
-    //callback drop handler
-    const dropHandler=(event:DragEvent, targetId:string)=>{
+    //callback dropHandler
+    const dropHandler = (event: DragEvent, targetId: string) => {
         event.preventDefault();
-    
+
         let draggableId = event.dataTransfer?.getData("text/plain").toString();
-        let draggableIndex = colorPalette.boxes.findIndex(b=>b.id === draggableId); 
-        let targetIndex = colorPalette.boxes.findIndex(b=>b.id === targetId);
-  
+        let draggableIndex = colorPalette.boxes.findIndex(
+            (b) => b.id === draggableId,
+        );
+        let targetIndex = colorPalette.boxes.findIndex(
+            (b) => b.id === targetId,
+        );
         let boxes = colorPalette.boxes;
         let removedBoxes = boxes.splice(draggableIndex, 1, boxes[targetIndex]);
-        boxes[targetIndex]=removedBoxes[0]
+        boxes[targetIndex] = removedBoxes[0];
         colorPalette.boxes = [...boxes];
-    }
+    };
+
+    let paletteShape =
+        "corner-shape: squircle; padding: 1px; border-radius: 90px;";
 </script>
 
 <div class="color-palette" style="--palette-color:{colorPalette.color}">
@@ -83,13 +74,17 @@
     </div>
     <div class="palette-color-boxes">
         {#each colorPalette.boxes as colorBox, i}
-            <DropTarget id={colorBox.id} ondrop={dropHandler}>
-                <ColorBox
-                    ondelete={deleteColorBox}
-                    bind:colorBox={colorPalette.boxes[i]}
-                    draggable={true}
-                    {@attach ondragstart}
-                ></ColorBox>
+            <DropTarget
+                id={colorBox.id}
+                ondrop={dropHandler}
+                style={paletteShape}
+            >
+                <DragTarget id={colorBox.id} style={paletteShape}>
+                    <ColorBox
+                        ondelete={deleteColorBox}
+                        bind:colorBox={colorPalette.boxes[i]}
+                    ></ColorBox>
+                </DragTarget>
             </DropTarget>
         {/each}
         <button class="btn btn-add-box" onclick={addColorBox}
@@ -106,15 +101,9 @@
         display: flex;
         flex-direction: column;
         border-radius: 20px;
-       
-        &:hover{
-            box-shadow:
-                rgba(17, 17, 26, 0.1) 0px 4px 16px,
-                rgba(17, 17, 26, 0.1) 0px 8px 24px,
-                rgba(17, 17, 26, 0.1) 0px 16px 56px;
-            
-            box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
-       box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+
+        &:hover {
+            box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
         }
         transition-property: box-shadow, transform;
         transition-duration: 200ms;

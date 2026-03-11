@@ -1,0 +1,1 @@
+ALTER TABLE `palette` ADD `zausl` text;
