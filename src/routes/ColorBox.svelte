@@ -1,14 +1,11 @@
 <script lang="ts">
+    import type { ColorBoxEntity } from "$lib/server/db/local/schema";
     import {
         LucideClipboardCopy,
         LucideCopy,
         LucideXCircle,
     } from "@lucide/svelte";
-    export type ColorBoxEntity = {
-        id: string;
-        name?: string;
-        color: string;
-    };
+   
     import Color, { type ColorInstance } from "color";
     let {
         colorBox = $bindable(),

@@ -16,7 +16,7 @@
 					<a href="/">CoolColorPalettes</a>
 				</li>
 				<li>
-					<a href="/new-palette">Create</a>
+					<a href="/new">New</a>
 				</li>
 			</ul>
 		</nav>

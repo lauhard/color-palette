@@ -2,10 +2,10 @@ import { BaseRepository } from "../BaseRepository";
 import type { Platform } from "../../../../app";
 // // TODO: Import your actual schema
 import { like } from "drizzle-orm/sql";
-import { colorpalette } from "$lib/server/db/local/schema";
+import { colorpalette, type ColorBoxEntity } from "$lib/server/db/local/schema";
 
 // // Placeholder types - replace with your actual schema types
-type ColorPalette = { id: string; name: string; colors: string[]; createdAt: Date; updatedAt: Date };
+type ColorPalette = { id: string; name: string; color: string; colorBoxes: ColorBoxEntity[]; createdAt: Date; updatedAt: Date };
 type NewColorPalette = Omit<ColorPalette, "id">;
 
 // /**
@@ -36,10 +36,12 @@ export class ColorPaletteRepository extends BaseRepository<
                .from(this.table)
                .where(like(this.table.name, `%${name}%`));
            
-           return results.map(row => ({
-               ...row,
-               colors: typeof row.colors === 'string' ? row.colors.split(',') : row.colors
-           }));
+           return results
+           ////if colors are string array, split them into array
+           //.map(row => ({
+           //    ...row,
+           //    colors: typeof row.colors === 'string' ? row.colors.split(',') : row.colors
+           //}));
        });
     }
 }

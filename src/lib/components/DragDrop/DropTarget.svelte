@@ -7,7 +7,7 @@
         ondrop: fn,
         style
     }: {
-        children: Snippet;
+        children?: Snippet;
         id: string;
         ondrop: (event: DragEvent, targetId: string) => void;
         style?:string;
@@ -22,6 +22,7 @@
 <div
     class:dropzone={showDropzone}
     style="{style}"
+    id={id}
     data-droptarget={id}
     ondrop={dropHandler}
     ondragover={(event) => {
@@ -40,5 +41,5 @@
     }}
     role="region"
 >
-    {@render children()}
+    {@render children?.()}
 </div>

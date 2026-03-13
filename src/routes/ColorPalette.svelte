@@ -1,58 +1,65 @@
 <script lang="ts">
-    export type ColorPaletteEntity = {
-        id: string;
-        name?: string;
-        color: string;
-        boxes: ColorBoxEntity[];
-    };
-    import type { ColorBoxEntity } from "./ColorBox.svelte";
     import { LucideCirclePlus } from "@lucide/svelte";
     import ColorBox from "./ColorBox.svelte";
     import DropTarget from "$lib/components/DragDrop/DropTarget.svelte";
     import DragTarget from "$lib/components/DragDrop/DragTarget.svelte";
-    let { colorPalette = $bindable() }: { colorPalette: ColorPaletteEntity } =
-        $props();
+    import type {
+        ColorBoxEntity,
+        ColorPaletteEntity,
+        NewColorPaletteEntity,
+    } from "$lib/server/db/local/schema";
 
+    let {
+        colorPalette = $bindable(),
+    }: { colorPalette: NewColorPaletteEntity } = $props();
+    console.log(colorPalette);
     const addColorBox = () => {
         const id = crypto.randomUUID();
         let colorBox: ColorBoxEntity = {
             name: "--color-001",
             id: id,
+            variableName: "",
             color:
-                colorPalette.boxes.length > 0
-                    ? colorPalette.boxes[colorPalette.boxes.length - 1].color
+                colorPalette.colorBoxes.length > 0
+                    ? colorPalette.colorBoxes[
+                          colorPalette.colorBoxes.length - 1
+                      ].color
                     : "#ffffff",
         };
-        colorPalette.boxes = [...colorPalette.boxes, colorBox];
+        colorPalette.colorBoxes = [...colorPalette.colorBoxes, colorBox];
     };
 
     //callback delete
     const deleteColorBox = (id: string) => {
-        let newBoxes = colorPalette.boxes
+        let newBoxes = colorPalette.colorBoxes
             .map((c) => {
                 return c.id !== id ? c : null;
             })
             .filter((b) => b !== null);
 
         console.log("new palette", newBoxes);
-        colorPalette.boxes = [...newBoxes];
+        colorPalette.colorBoxes = [...newBoxes];
     };
 
     //callback dropHandler
     const dropHandler = (event: DragEvent, targetId: string) => {
         event.preventDefault();
+        let draggableId = event.dataTransfer?.getData("text/plain");
+        // let target= document.getElementById(targetId);
+        // let drag= document.getElementById(draggableId!);
+        // console.log("drag",drag);
+        // target?.appendChild(drag!);
 
-        let draggableId = event.dataTransfer?.getData("text/plain").toString();
-        let draggableIndex = colorPalette.boxes.findIndex(
+        let draggableIndex = colorPalette.colorBoxes.findIndex(
             (b) => b.id === draggableId,
         );
-        let targetIndex = colorPalette.boxes.findIndex(
+        let targetIndex = colorPalette.colorBoxes.findIndex(
             (b) => b.id === targetId,
         );
-        let boxes = colorPalette.boxes;
+        let boxes = colorPalette.colorBoxes;
         let removedBoxes = boxes.splice(draggableIndex, 1, boxes[targetIndex]);
         boxes[targetIndex] = removedBoxes[0];
-        colorPalette.boxes = [...boxes];
+        colorPalette.colorBoxes = [...boxes];
     };
 
     let paletteShape =
@@ -73,7 +80,7 @@
         </div>
     </div>
     <div class="palette-color-boxes">
-        {#each colorPalette.boxes as colorBox, i}
+        {#each colorPalette.colorBoxes as colorBox, i}
             <DropTarget
                 id={colorBox.id}
                 ondrop={dropHandler}
@@ -82,7 +89,7 @@
                 <DragTarget id={colorBox.id} style={paletteShape}>
                     <ColorBox
                         ondelete={deleteColorBox}
-                        bind:colorBox={colorPalette.boxes[i]}
+                        bind:colorBox={colorPalette.colorBoxes[i]}
                     ></ColorBox>
                 </DragTarget>
             </DropTarget>

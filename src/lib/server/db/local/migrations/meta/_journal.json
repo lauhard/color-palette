@@ -43,6 +43,13 @@
       "when": 1773172909260,
       "tag": "0005_bizarre_starfox",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1773259569319,
+      "tag": "0006_luxuriant_risque",
+      "breakpoints": true
     }
   ]
 }
